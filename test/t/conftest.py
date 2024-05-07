@@ -132,7 +132,7 @@ def _avahi_hosts(bash: pexpect.spawn) -> List[str]:
 def known_hosts(bash: pexpect.spawn) -> List[str]:
     output = assert_bash_exec(
         bash,
-        '_known_hosts_real ""; '
+        '_comp_compgen_known_hosts ""; '
         r'printf "%s\n" "${COMPREPLY[@]}"; unset -v COMPREPLY',
         want_output=True,
     )
@@ -186,7 +186,6 @@ def partialize(
 
 @pytest.fixture(scope="class")
 def bash(request) -> pexpect.spawn:
-
     logfile: Optional[TextIO] = None
     histfile = None
     tmpdir = None
@@ -274,8 +273,12 @@ def bash(request) -> pexpect.spawn:
         bash.expect_exact(PS1)
 
         # Load bashrc and bash_completion
+        bash_completion = os.environ.get(
+            "BASH_COMPLETION_TEST_BASH_COMPLETION",
+            "%s/../bash_completion" % testdir,
+        )
         assert_bash_exec(bash, "source '%s/config/bashrc'" % testdir)
-        assert_bash_exec(bash, "source '%s/../bash_completion'" % testdir)
+        assert_bash_exec(bash, "source '%s'" % bash_completion)
 
         # Use command name from marker if set, or grab from test filename
         cmd = None  # type: Optional[str]
@@ -376,10 +379,10 @@ def is_bash_type(bash: pexpect.spawn, cmd: Optional[str]) -> bool:
 
 def load_completion_for(bash: pexpect.spawn, cmd: str) -> bool:
     try:
-        # Allow __load_completion to fail so we can test completions
+        # Allow _comp_load to fail so we can test completions
         # that are directly loaded in bash_completion without a separate file.
-        assert_bash_exec(bash, "__load_completion %s || :" % cmd)
-        assert_bash_exec(bash, "complete -p %s &>/dev/null" % cmd)
+        assert_bash_exec(bash, "_comp_load -- %s || :" % cmd)
+        assert_bash_exec(bash, "complete -p -- %s &>/dev/null" % cmd)
     except AssertionError:
         return False
     return True
@@ -423,20 +426,22 @@ def assert_bash_exec(
     )
     if want_output is not None:
         if output:
-            assert (
-                want_output
-            ), 'Unexpected output from "%s": exit status=%s, output="%s"' % (
-                cmd,
-                status,
-                output,
+            assert want_output, (
+                'Unexpected output from "%s": exit status=%s, output="%s"'
+                % (
+                    cmd,
+                    status,
+                    output,
+                )
             )
         else:
-            assert (
-                not want_output
-            ), 'Expected output from "%s": exit status=%s, output="%s"' % (
-                cmd,
-                status,
-                output,
+            assert not want_output, (
+                'Expected output from "%s": exit status=%s, output="%s"'
+                % (
+                    cmd,
+                    status,
+                    output,
+                )
             )
 
     return output
@@ -596,9 +601,9 @@ class bash_env_saved:
 
     def _unprotect_variable(self, varname: str):
         if varname not in self.saved_variables:
-            self.saved_variables[
-                varname
-            ] = bash_env_saved.saved_state.ChangesDetected
+            self.saved_variables[varname] = (
+                bash_env_saved.saved_state.ChangesDetected
+            )
             self._copy_variable(
                 varname, "%s_OLDVAR_%s" % (self.prefix, varname)
             )
@@ -690,9 +695,9 @@ class bash_env_saved:
 
     def save_variable(self, varname: str):
         self._unprotect_variable(varname)
-        self.saved_variables[
-            varname
-        ] = bash_env_saved.saved_state.ChangesIgnored
+        self.saved_variables[varname] = (
+            bash_env_saved.saved_state.ChangesIgnored
+        )
 
     # TODO: We may restore the "export" attribute as well though it is
     #   not currently tested in "diff_env"
@@ -817,7 +822,6 @@ def assert_complete(
             pytest.xfail(xfail)
 
     with bash_env_saved(bash, sendintr=True) as bash_env:
-
         cwd = kwargs.get("cwd")
         if cwd:
             bash_env.chdir(str(cwd))

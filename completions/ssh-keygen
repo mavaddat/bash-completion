@@ -1,6 +1,6 @@
 # ssh-keygen(1) completion                                 -*- shell-script -*-
 
-_ssh_keygen()
+_comp_cmd_ssh_keygen()
 {
     local cur prev words cword comp_args
     _comp_initialize -n := -- "$@" || return
@@ -23,34 +23,34 @@ _ssh_keygen()
                     ;;
             esac
             ((${#sizes[@]})) &&
-                COMPREPLY=($(compgen -W '"${sizes[@]}"' -- "$cur"))
+                _comp_compgen -- -W '"${sizes[@]}"'
             return
             ;;
         -*E)
-            COMPREPLY=($(compgen -W 'md5 sha256' -- "$cur"))
+            _comp_compgen -- -W 'md5 sha256'
             return
             ;;
         -*[FR])
             # TODO: trim this down to actual entries in known hosts files
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         -*[Dw])
-            _filedir so
+            _comp_compgen_filedir so
             return
             ;;
         -*[fGKsT])
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -*m)
-            COMPREPLY=($(compgen -W 'PEM PKCS8 RFC4716' -- "$cur"))
+            _comp_compgen -- -W 'PEM PKCS8 RFC4716'
             return
             ;;
         -*n)
             [[ ${words[*]} != *\ -*Y\ * ]] || return
             if [[ ${words[*]} == *\ -*h\ * ]]; then
-                _known_hosts_real -- "${cur##*,}"
+                _comp_compgen_known_hosts -- "${cur##*,}"
                 ((${#COMPREPLY[@]})) &&
                     _comp_delimited , -W '"${COMPREPLY[@]}"'
             else
@@ -60,8 +60,7 @@ _ssh_keygen()
             ;;
         -*O)
             if [[ $cur != *=* ]]; then
-                COMPREPLY=($(compgen -W '
-                    clear critical: extension: force-command=
+                _comp_compgen -- -W 'clear critical: extension: force-command=
                     no-agent-forwarding no-port-forwarding no-pty no-user-rc
                     no-x11-forwarding permit-agent-forwarding
                     permit-port-forwarding permit-pty permit-user-rc
@@ -71,61 +70,62 @@ _ssh_keygen()
                     lines= start-line= checkpoint= memory= start= generator=
 
                     application= challenge= device= no-touch-required resident
-                    user= write-attestation=
-                    ' -- "$cur"))
+                    user= write-attestation='
+
                 [[ ${COMPREPLY-} == *[:=] ]] && compopt -o nospace
-                __ltrim_colon_completions "$cur"
+                _comp_ltrim_colon_completions "$cur"
             else
                 case $cur in
                     force-command=*)
                         compopt -o filenames
-                        COMPREPLY=($(compgen -c -- "${cur#*=}"))
+                        _comp_compgen -c "${cur#*=}" commands
                         ;;
                     checkpoint=* | challenge=* | write-attestation=*)
-                        cur=${cur#*=}
-                        _filedir
+                        _comp_compgen -c "${cur#*=}" filedir
                         ;;
                     application=*([^:=]))
-                        COMPREPLY=($(compgen -W "ssh:" -- "${cur#*=}"))
+                        _comp_compgen -c "${cur#*=}" -- -W "ssh:"
                         compopt -o nospace
                         ;;
                     user=*)
-                        COMPREPLY=($(compgen -u -- "${cur#*=}"))
+                        _comp_compgen -c "${cur#*=}" -- -u
                         ;;
                 esac
             fi
             return
             ;;
         -*r)
-            [[ ${words[*]} != *\ -*Y\ * ]] || _filedir
+            [[ ${words[*]} != *\ -*Y\ * ]] || _comp_compgen_filedir
             return
             ;;
         -*t)
-            local protocols=$(_comp_xfunc ssh query "$1" protocol-version)
+            # Prefer `ssh` from same dir for resolving options, etc
+            local pathcmd protocols
+            pathcmd=$(type -P -- "$1") && local PATH=${pathcmd%/*}:$PATH
+            _comp_compgen -v protocols -x ssh query protocol-version
             local types='dsa ecdsa ecdsa-sk ed25519 ed25519-sk rsa'
-            if [[ $protocols == *1* ]]; then
+            if [[ ${protocols[*]} == *1* ]]; then
                 types+=' rsa1'
             fi
-            COMPREPLY=($(compgen -W "$types" -- "$cur"))
+            _comp_compgen -- -W "$types"
             return
             ;;
         -*Y)
-            COMPREPLY=($(compgen -W 'find-principals check-novalidate sign
-                verify' -- "$cur"))
+            _comp_compgen -- -W 'find-principals check-novalidate sign verify'
             return
             ;;
     esac
 
+    _comp_compgen_set
     if [[ $cur == -* ]]; then
-        local opts=$(_parse_usage "$1" "-?")
-        [[ ! $opts ]] && opts=$(_parse_help "$1" "-?") # OpenSSH < 7
-        COMPREPLY=($(compgen -W "$opts" -- "$cur"))
+        _comp_compgen_usage -- "-?" ||
+            _comp_compgen_help -- "-?" # OpenSSH < 7
     fi
 
     if [[ ${words[*]} == *\ -*s\ * ]]; then
-        _filedir pub
+        _comp_compgen -a filedir pub
     fi
 } &&
-    complete -F _ssh_keygen ssh-keygen
+    complete -F _comp_cmd_ssh_keygen ssh-keygen
 
 # ex: filetype=sh

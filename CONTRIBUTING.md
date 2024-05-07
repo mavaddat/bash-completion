@@ -42,8 +42,9 @@ that. Don't be disappointed if it does or doesn't happen instantly.
 
 Also, please bear the following coding guidelines in mind:
 
-- See the [API and naming](doc/api-and-naming.md) document for information
-  about conventions to follow related to those topics.
+- See the related documents, [API and naming](doc/api-and-naming.md) and
+  [Coding style guide](doc/styleguide.md), for information about conventions to
+  follow related to those topics.
 
 - Do not use Perl, Ruby, Python etc. to do text processing unless the
   command for which you are writing the completion code implies the
@@ -66,11 +67,11 @@ Also, please bear the following coding guidelines in mind:
   external programs, which are expensive to fork and execute, so do
   make full use of those:
 
-  `?(pattern-list)` - match zero or one occurrences of patterns
-  `*(pattern-list)` - match zero or more occurrences of patterns
-  `+(pattern-list)` - match one or more occurrences of patterns
-  `@(pattern-list)` - match exactly one of the given patterns
-  `!(pattern-list)` - match anything except one of the given patterns
+  - `?(pattern-list)` - match zero or one occurrences of patterns
+  - `*(pattern-list)` - match zero or more occurrences of patterns
+  - `+(pattern-list)` - match one or more occurrences of patterns
+  - `@(pattern-list)` - match exactly one of the given patterns
+  - `!(pattern-list)` - match anything except one of the given patterns
 
 - Following on from the last point, be sparing with the use of
   external processes whenever you can. Completion functions need to be
@@ -107,23 +108,30 @@ Also, please bear the following coding guidelines in mind:
 
 - We want our completions to work in `posix` and `nounset` modes.
 
-  Unfortunately due to a bash < 5.1 bug, toggling POSIX mode interferes
-  with keybindings and should not be done. This rules out use of
-  process substitution which causes syntax errors in POSIX mode.
+  Unfortunately due to a bash < 5.1 bug, toggling POSIX mode
+  interferes with keybindings and should not be done. This rules out
+  use of process substitution which causes syntax errors in POSIX mode
+  of bash < 5.1.
 
   Instead of toggling `nounset` mode, make sure to test whether
   variables are set (e.g. with `[[ -v varname ]]`) or use default
   expansion (e.g. `${varname-}`).
 
-- Prefer `compgen -W '...' -- $cur` over embedding `$cur` in external
-  command arguments (often e.g. sed, grep etc) unless there's a good
-  reason to embed it. Embedding user input in command lines can result
-  in syntax errors and other undesired behavior, or messy quoting
-  requirements when the input contains unusual characters. Good
-  reasons for embedding include functionality (if the thing does not
-  sanely work otherwise) or performance (if it makes a big difference
-  in speed), but all embedding cases should be documented with
-  rationale in comments in the code.
+- Prefer `_comp_compgen_split -- "$(...)"` over embedding `$cur` in external
+  command arguments (often e.g. sed, grep etc) unless there's a good reason to
+  embed it. Embedding user input in command lines can result in syntax errors
+  and other undesired behavior, or messy quoting requirements when the input
+  contains unusual characters.  Good reasons for embedding include
+  functionality (if the thing does not sanely work otherwise) or performance
+  (if it makes a big difference in speed), but all embedding cases should be
+  documented with rationale in comments in the code.
+
+  Do not use `_comp_compgen -- -W "$(...)"` or `_comp_compgen -- -W '$(...)'`
+  but always use `_comp_compgen_split -- "$(...)"`.  In the former case, when
+  the command output contains strings looking like shell expansions, the
+  expansions will be unexpectedly performed, which becomes a vulnerability.  In
+  the latter case, checks by shellcheck and shfmt will not be performed inside
+  `'...'`.  Also, `_comp_compgen_split` is `IFS`-safe.
 
 - When completing available options, offer only the most descriptive
   ones as completion results if there are multiple options that do the
@@ -198,6 +206,15 @@ Also, please bear the following coding guidelines in mind:
 
 - In addition to running the test suite, there are a few scripts in the test/
   dir that catch some common issues, see and use for example runLint.
+
+- Make sure you have Python 3.7 or later installed. This is required for
+  running the development tooling, linters etc. Rest of the development
+  Python dependencies are specified in `test/requirements-dev.txt` which
+  can be fed for example to `pip`:
+
+  ```shell
+  python3 -m pip install -r test/requirements-dev.txt
+  ```
 
 - Install pre-commit and set it up, see <https://pre-commit.com/>.
   That'll run a bunch of linters and the like, the same as the

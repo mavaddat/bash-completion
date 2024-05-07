@@ -11,9 +11,8 @@ and [pexpect](https://pexpect.readthedocs.io/).
 
 ## Coding style
 
-For the Python part, all of it is formatted using
-[Black](https://github.com/psf/black), and we also run
-[Flake8](https://flake8.pycqa.org/) on it.
+For the Python part, all of it is checked and formatted using
+[Ruff](https://docs.astral.sh/ruff/).
 
 ## Installing dependencies
 
@@ -23,7 +22,7 @@ dependencies are specified in the `test/requirements.txt` file. If using `pip`,
 this file can be fed directly to it, e.g. like:
 
 ```shell
-pip install -r test/requirements.txt
+python3 -m pip install -r test/requirements.txt
 ```
 
 ### Debian/Ubuntu

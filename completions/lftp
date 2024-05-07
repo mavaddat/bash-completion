@@ -1,6 +1,6 @@
 # lftp(1) completion                                       -*- shell-script -*-
 
-_lftp()
+_comp_cmd_lftp()
 {
     local cur prev words cword comp_args
     _comp_initialize -- "$@" || return
@@ -9,7 +9,7 @@ _lftp()
     # shellcheck disable=SC2254
     case $prev in
         -${noargopts}f)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --help | --version | -${noargopts}[chveups])
@@ -18,13 +18,13 @@ _lftp()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    COMPREPLY=($(compgen -W '$("$1" -c "bookmark list" 2>/dev/null)' -- "$cur"))
-    _known_hosts_real -- "$cur"
+    _comp_compgen_split -- "$("$1" -c "bookmark list" 2>/dev/null)"
+    _comp_compgen -a known_hosts -- "$cur"
 } &&
-    complete -F _lftp lftp
+    complete -F _comp_cmd_lftp lftp
 
 # ex: filetype=sh

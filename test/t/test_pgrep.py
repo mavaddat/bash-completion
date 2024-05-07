@@ -2,7 +2,6 @@ import pytest
 
 
 class TestPgrep:
-
     # "p": Assume that our process name completion runs ps
     @pytest.mark.complete("pgrep p")
     def test_1(self, completion):
@@ -32,4 +31,3 @@ class TestPgrep:
     )
     def test_nslist_after_comma(self, completion):
         assert completion
-        assert not any("," in x for x in completion)

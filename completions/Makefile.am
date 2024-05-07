@@ -38,10 +38,12 @@ bashcomp_DATA = 2to3 \
 		bzip2 \
 		_cal \
 		cancel \
+		_cargo \
 		cardctl \
 		carton \
 		ccache \
 		ccze \
+		cd \
 		cfagent \
 		cfrun \
 		chage \
@@ -98,6 +100,7 @@ bashcomp_DATA = 2to3 \
 		ebtables \
 		ecryptfs-migrate-home \
 		_eject \
+		env \
 		eog \
 		ether-wake \
 		evince \
@@ -116,11 +119,13 @@ bashcomp_DATA = 2to3 \
 		fio \
 		firefox \
 		flake8 \
+		_flamegraph \
 		freebsd-update \
 		freeciv \
 		freeciv-server \
 		function \
 		fusermount \
+		_gaiacli \
 		gcc \
 		gcl \
 		gdb \
@@ -130,12 +135,14 @@ bashcomp_DATA = 2to3 \
 		geoiplookup \
 		getconf \
 		getent \
+		_gh \
 		gkrellm \
 		gm \
 		gnatmake \
 		gnokii \
 		gnome-mplayer \
 		gnome-screenshot \
+		_golangci-lint \
 		gpasswd \
 		gpg \
 		gpg2 \
@@ -148,8 +155,10 @@ bashcomp_DATA = 2to3 \
 		groupmod \
 		growisofs \
 		grpck \
+		_gsctl \
 		gssdp-discover \
 		gzip \
+		hash \
 		hcitool \
 		hddtemp \
 		help \
@@ -200,13 +209,16 @@ bashcomp_DATA = 2to3 \
 		jshint \
 		json_xs \
 		jsonschema \
+		_jungle \
 		k3b \
 		kcov \
+		_keyring \
 		kill \
 		killall \
 		kldload \
 		kldunload \
 		koji \
+		_kontena \
 		ktutil \
 		larch \
 		lastlog \
@@ -247,6 +259,7 @@ bashcomp_DATA = 2to3 \
 		mc \
 		mcrypt \
 		mdadm \
+		_mdbook \
 		mdtool \
 		medusa \
 		mii-diag \
@@ -284,12 +297,13 @@ bashcomp_DATA = 2to3 \
 		ngrep \
 		nmap \
 		_nmcli \
+		_nox \
 		nproc \
 		nslookup \
 		nsupdate \
 		ntpdate \
+		_nvm \
 		oggdec \
-		_op \
 		openssl \
 		opera \
 		optipng \
@@ -306,6 +320,8 @@ bashcomp_DATA = 2to3 \
 		pidof \
 		pine \
 		ping \
+		_pip \
+		_pipenv \
 		pkg-config \
 		pkg-get \
 		pkg_delete \
@@ -362,6 +378,7 @@ bashcomp_DATA = 2to3 \
 		_reptyr \
 		resolvconf \
 		_rfkill \
+		_rg \
 		ri \
 		rmlist \
 		rmmod \
@@ -373,7 +390,9 @@ bashcomp_DATA = 2to3 \
 		rrdtool \
 		rsync \
 		_rtcwake \
+		_ruff \
 		_runuser \
+		_rustup \
 		sbcl \
 		sbopkg \
 		screen \
@@ -418,6 +437,7 @@ bashcomp_DATA = 2to3 \
 		tcpnice \
 		timeout \
 		tipc \
+		_tokio-console \
 		tox \
 		tracepath \
 		tree \
@@ -441,6 +461,7 @@ bashcomp_DATA = 2to3 \
 		userdel \
 		usermod \
 		valgrind \
+		_vault \
 		vipw \
 		vmstat \
 		vncviewer \
@@ -475,6 +496,7 @@ bashcomp_DATA = 2to3 \
 		xz \
 		xzdec \
 		ypmatch \
+		_yq \
 		_yum \
 		yum-arch \
 		zopfli \
@@ -494,11 +516,23 @@ CLEANFILES = \
 	aclocal-1.14 \
 	aclocal-1.15 \
 	aclocal-1.16 \
+	_airflow \
+	_allero \
 	alpine \
 	alternatives \
 	animate \
+	_ansible \
+	_ansible-config \
+	_ansible-console \
+	_ansible-doc \
+	_ansible-galaxy \
+	_ansible-inventory \
+	_ansible-playbook \
+	_ansible-pull \
+	_ansible-vault \
 	apropos \
 	aptitude-curses \
+	_arduino-cli \
 	arm-koji \
 	asciidoc.py \
 	autoheader \
@@ -512,35 +546,53 @@ CLEANFILES = \
 	autossh \
 	autoupdate \
 	avahi-browse-domains \
+	_bao \
+	_black \
+	_blackd \
 	bmake \
 	bsdtar \
 	btdownloadcurses.py \
 	btdownloadgui.py \
+	_buf \
 	c++ \
 	cc \
 	cdrecord \
+	_chezmoi \
 	chrome \
 	chromium \
 	ci \
+	_cilium \
 	ciptool \
 	civclient \
 	civserver \
+	_cloudquery \
 	clzip \
 	co \
 	colormake \
 	compare \
 	compgen \
 	composite \
+	_conda \
 	conjure \
+	_constellation \
+	_consul \
 	cowthink \
+	_crc \
 	createdb \
 	createuser \
+	_cz \
+	_datree \
 	dcop \
+	_deno \
 	dfutool \
+	_diesel \
 	display \
+	_dlv \
+	_docker \
 	dpkg-deb \
 	dpkg-query \
 	dpkg-reconfigure \
+	_dprint \
 	dropdb \
 	dropuser \
 	edquota \
@@ -549,6 +601,7 @@ CLEANFILES = \
 	f95 \
 	filebucket \
 	firefox-esr \
+	_flask \
 	freeciv-gtk2 \
 	freeciv-gtk3 \
 	freeciv-sdl \
@@ -561,6 +614,8 @@ CLEANFILES = \
 	g4 \
 	g77 \
 	g95 \
+	_gaiad \
+	_gardenctl \
 	gcc-5 \
 	gcc-6 \
 	gcc-7 \
@@ -577,34 +632,54 @@ CLEANFILES = \
 	gfortran-6 \
 	gfortran-7 \
 	gfortran-8 \
+	_gh-label \
+	_git-bump \
 	gkrellm2 \
 	gmake \
 	gmplayer \
 	gnumake \
+	_go-licenses \
 	google-chrome \
 	google-chrome-stable \
+	_gopherjs \
+	_goreleaser \
 	gpc \
 	gpgv2 \
 	gssdp-device-sniffer \
 	gtar \
+	_gup \
 	hciattach \
 	hciconfig \
 	hd \
+	_helm \
 	host \
 	hping \
 	hping3 \
+	_httpx \
+	_hugo \
 	iceweasel \
 	identify \
 	ifdown \
 	ifquery \
 	ifstatus \
+	_ignite \
 	import \
+	_incus \
+	_infracost \
 	inotifywatch \
 	insmod.static \
 	iperf3 \
+	_istioctl \
 	javac \
 	javadoc \
+	_k3s \
+	_kn \
+	_kool \
 	kplayer \
+	_kratos \
+	_kubeadm \
+	_kubectl \
+	_kubescape \
 	l2ping \
 	lbzip2 \
 	ldapadd \
@@ -614,6 +689,8 @@ CLEANFILES = \
 	ldapmodrdn \
 	ldappasswd \
 	ldapwhoami \
+	_lefthook \
+	_linkerd \
 	links2 \
 	lintian-info \
 	lua50 \
@@ -650,19 +727,34 @@ CLEANFILES = \
 	lvscan \
 	lz4c \
 	mailsnarf \
+	_mattermost \
 	md5sum \
 	mdecrypt \
 	mencoder \
+	_metalctl \
 	micropython \
+	_minikube \
+	_mise \
 	mkisofs \
+	_mmctl \
 	mogrify \
+	_moldy \
 	montage \
 	mozilla-firefox \
 	mplayer2 \
 	msgsnarf \
+	_multi-gitter \
 	muttng \
 	ncal \
 	neomutt \
+	_nfpm \
+	_nomad \
+	_npm \
+	_oc \
+	_okteto \
+	_op \
+	_ory \
+	_packer \
 	pbzip2 \
 	pccardctl \
 	pdlzip \
@@ -670,7 +762,9 @@ CLEANFILES = \
 	phing \
 	pigz \
 	pinfo \
+	ping4 \
 	ping6 \
+	_pip3 \
 	pkg_deinstall \
 	pkg_info \
 	pkgconf \
@@ -679,14 +773,17 @@ CLEANFILES = \
 	pm-suspend \
 	pm-suspend-hybrid \
 	pmake \
+	_polygon-edge \
 	postalias \
 	ppc-koji \
+	_pulumi \
 	puppetca \
 	puppetd \
 	puppetdoc \
 	puppetmasterd \
 	puppetqd \
 	puppetrun \
+	pushd \
 	pvchange \
 	pvcreate \
 	pvdisplay \
@@ -694,6 +791,7 @@ CLEANFILES = \
 	pvremove \
 	pvs \
 	pvscan \
+	_px \
 	pxz \
 	py.test \
 	py.test-2 \
@@ -719,6 +817,7 @@ CLEANFILES = \
 	python3.9 \
 	python3.10 \
 	python3.11 \
+	python3.12 \
 	pyvenv-3.4 \
 	pyvenv-3.5 \
 	pyvenv-3.6 \
@@ -727,13 +826,17 @@ CLEANFILES = \
 	pyvenv-3.9 \
 	pyvenv-3.10 \
 	pyvenv-3.11 \
+	pyvenv-3.12 \
 	qemu-kvm \
 	qemu-system-i386 \
 	qemu-system-x86_64 \
+	_qrpc \
 	quotacheck \
 	quotaoff \
 	quotaon \
 	ralsh \
+	_random \
+	_rclone \
 	rcsdiff \
 	rdict \
 	repquota \
@@ -755,6 +858,7 @@ CLEANFILES = \
 	sha384sum \
 	sha512sum \
 	sidedoor \
+	_skaffold \
 	slogin \
 	smbcacls \
 	smbcquotas \
@@ -764,12 +868,25 @@ CLEANFILES = \
 	smbtree \
 	sparc-koji \
 	spovray \
+	_sshi \
+	_ssh-inscribe \
 	star \
+	_starship \
 	stream \
 	sudoedit \
+	_tanzu \
+	_tanzu-core \
+	_tendermint \
+	_terraform \
+	_tkn \
+	_tkn-pac \
 	tightvncviewer \
+	_tofu \
 	tracepath6 \
+	_trivy \
 	typeset \
+	_upctl \
+	_vacuum \
 	vgcfgbackup \
 	vgcfgrestore \
 	vgchange \
@@ -789,6 +906,8 @@ CLEANFILES = \
 	vgscan \
 	vgsplit \
 	vigr \
+	_virtctl \
+	_watchexec \
 	whatis \
 	wine-development \
 	wine-stable \
@@ -797,7 +916,9 @@ CLEANFILES = \
 	wine64-stable \
 	xpovray \
 	xvnc4viewer \
-	ypcat
+	ypcat \
+	_zarf \
+	_zitadel
 
 symlinks: $(DATA)
 	$(ss) 7z \
@@ -831,6 +952,8 @@ symlinks: $(DATA)
 		ncal
 	$(ss) cardctl \
 		pccardctl
+	$(ss) cd \
+		pushd
 	$(ss) chromium-browser \
 		chrome chromium google-chrome google-chrome-stable
 	$(ss) complete \
@@ -852,10 +975,14 @@ symlinks: $(DATA)
 		mailsnarf msgsnarf
 	$(ss) firefox \
 		firefox-esr iceweasel mozilla-firefox
+	$(ss) _flamegraph \
+		_watchexec
 	$(ss) freeciv \
 		civclient freeciv-gtk2 freeciv-gtk3 freeciv-sdl freeciv-xaw
 	$(ss) freeciv-server \
 		civserver
+	$(ss) _gaiacli \
+		_gaiad _npm _tendermint
 	$(ss) gcc \
 		c++ cc f77 f95 g++ g++-5 g++-6 g++-7 g++-8 g77 g95 gcc-5 \
 		gcc-6 gcc-7 gcc-8 gccgo gccgo-5 gccgo-6 gccgo-7 gccgo-8 gcj \
@@ -864,8 +991,74 @@ symlinks: $(DATA)
 		mkisofs
 	$(ss) geoiplookup \
 		geoiplookup6
+	$(ss) _gh \
+		_infracost
 	$(ss) gkrellm \
 		gkrellm2
+	$(ss) _golangci-lint \
+		_allero \
+		_arduino-cli \
+		_buf \
+		_chezmoi \
+		_cilium \
+		_cloudquery \
+		_constellation \
+		_crc \
+		_datree \
+		_dlv \
+		_docker \
+		_gardenctl \
+		_gh-label \
+		_git-bump \
+		_go-licenses \
+		_gopherjs \
+		_goreleaser \
+		_gup \
+		_helm \
+		_hugo \
+		_incus \
+		_ignite \
+		_istioctl \
+		_k3s \
+		_kn \
+		_kool \
+		_kratos \
+		_kubeadm \
+		_kubectl \
+		_kubescape \
+		_lefthook \
+		_linkerd \
+		_mattermost \
+		_metalctl \
+		_minikube \
+		_mise \
+		_mmctl \
+		_moldy \
+		_multi-gitter \
+		_nfpm \
+		_oc \
+		_okteto \
+		_op \
+		_ory \
+		_polygon-edge \
+		_pulumi \
+		_px \
+		_qrpc \
+		_random \
+		_rclone \
+		_skaffold \
+		_sshi \
+		_ssh-inscribe \
+		_tanzu \
+		_tanzu-core \
+		_tkn \
+		_tkn-pac \
+		_trivy \
+		_upctl \
+		_vacuum \
+		_virtctl \
+		_zarf \
+		_zitadel
 	$(ss) gpgv \
 		gpgv2
 	$(ss) gssdp-discover \
@@ -924,10 +1117,25 @@ symlinks: $(DATA)
 		apropos whatis
 	$(ss) mcrypt \
 		mdecrypt
+	$(ss) _mdbook \
+		_deno _diesel _dprint _starship
 	$(ss) mplayer \
 		gmplayer kplayer mencoder mplayer2
 	$(ss) mutt \
 		muttng neomutt
+	$(ss) _nox \
+		_airflow \
+		_ansible \
+		_ansible-config \
+		_ansible-console \
+		_ansible-doc \
+		_ansible-galaxy \
+		_ansible-inventory \
+		_ansible-playbook \
+		_ansible-pull \
+		_ansible-vault \
+		_conda \
+		_cz
 	$(ss) nslookup \
 		host
 	$(ss) p4 \
@@ -937,7 +1145,11 @@ symlinks: $(DATA)
 	$(ss) pine \
 		alpine
 	$(ss) ping \
-		ping6
+		ping4 ping6
+	$(ss) _pip \
+		_pip3
+	$(ss) _pipenv \
+		_black _blackd _flask _httpx
 	$(ss) pkg-config \
 		pkgconf
 	$(ss) pkg_delete \
@@ -964,10 +1176,10 @@ symlinks: $(DATA)
 	$(ss) python \
 		micropython pypy pypy3 pyston pyston3 python2 python2.7 \
 		python3 python3.3  python3.4 python3.5 python3.6 python3.7 \
-		python3.8 python3.9 python3.10 python3.11
+		python3.8 python3.9 python3.10 python3.11 python3.12
 	$(ss) pyvenv \
 		pyvenv-3.4 pyvenv-3.5 pyvenv-3.6 pyvenv-3.7 pyvenv-3.8 \
-		pyvenv-3.9 pyvenv-3.10 pyvenv-3.11
+		pyvenv-3.9 pyvenv-3.10 pyvenv-3.11 pyvenv-3.12
 	$(ss) qdbus \
 		dcop
 	$(ss) qemu \
@@ -985,7 +1197,7 @@ symlinks: $(DATA)
 	$(ss) sbcl \
 		sbcl-mt
 	$(ss) sha256sum \
-		md5sum shasum sha1sum sha224sum sha384sum sha512sum
+		b2sum md5sum shasum sha1sum sha224sum sha384sum sha512sum
 	$(ss) ssh \
 		autossh scp sftp sidedoor slogin
 	$(ss) sudo \
@@ -996,6 +1208,8 @@ symlinks: $(DATA)
 		tracepath6
 	$(ss) update-alternatives \
 		alternatives
+	$(ss) _vault \
+		_bao _consul _nomad _packer _terraform _tofu
 	$(ss) vipw \
 		vigr
 	$(ss) vncviewer \
@@ -1020,9 +1234,9 @@ install-data-hook: ss = $(SETUP_SYMLINKS) $(DESTDIR)$(bashcompdir)
 install-data-hook: symlinks
 
 check-local:
-	ret=0; \
+	REPLY=0; \
 	for file in $(bashcomp_DATA); do \
 		$${bashcomp_bash:-$${BASH:-bash}} \
-			-O extglob -n $(srcdir)/$$file || ret=$$?; \
+			-O extglob -n $(srcdir)/$$file || REPLY=$$?; \
 	done; \
-	exit $$ret
+	exit $$REPLY

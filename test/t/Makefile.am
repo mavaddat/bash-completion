@@ -40,6 +40,7 @@ EXTRA_DIST = \
 	test_avahi_browse.py \
 	test_avctrl.py \
 	test_awk.py \
+	test_b2sum.py \
 	test_badblocks.py \
 	test_base64.py \
 	test_bash.py \
@@ -220,6 +221,7 @@ EXTRA_DIST = \
 	test_gssdp_device_sniffer.py \
 	test_gssdp_discover.py \
 	test_gzip.py \
+	test_hash.py \
 	test_hciattach.py \
 	test_hciconfig.py \
 	test_hcitool.py \
@@ -420,7 +422,6 @@ EXTRA_DIST = \
 	test_objdump.py \
 	test_od.py \
 	test_oggdec.py \
-	test_op.py \
 	test_openssl.py \
 	test_opera.py \
 	test_optipng.py \
@@ -552,7 +553,10 @@ EXTRA_DIST = \
 	test_sftp.py \
 	test_sh.py \
 	test_sha1sum.py \
+	test_sha224sum.py \
 	test_sha256sum.py \
+	test_sha384sum.py \
+	test_sha512sum.py \
 	test_shar.py \
 	test_shellcheck.py \
 	test_sitecopy.py \
@@ -708,8 +712,13 @@ all:
 
 PYTEST = @PYTEST@
 
-check-local:
+# Some tests require completions/ symlinks to be in place, which would be a
+# chore to achieve in the build dir with VPATH builds (well not the symlinks,
+# but the "main" files they target), e.g. "make distcheck". Therefore we test
+# the installed tree instead, which isn't a bad idea in the first place.
+installcheck-local:
 	ABS_TOP_BUILDDIR="$(abs_top_builddir)" \
+	BASH_COMPLETION_TEST_BASH_COMPLETION="$(DESTDIR)/$(pkgdatadir)/bash_completion" \
 		$(PYTEST) $(PYTESTFLAGS) $(srcdir)
 
 clean-local:

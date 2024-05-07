@@ -1,28 +1,28 @@
 default_stages: [commit]
+minimum_pre_commit_version: 2.4.0
 
 repos:
 
   - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.17.0
+    rev: v0.19.1
     hooks:
       - id: gitlint
-        stages: [commit-msg]
 
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.6.0-1
+    rev: v3.8.0-1
     hooks:
-      - id: shfmt-docker
+      - id: shfmt
         types: [text]
-        files: ^(bash_completion|completions/.+|test/(config/bashrc|update-test-cmd-list)|.+\.sh(\.in)?)$
+        files: ^(bash_completion(\.d/[^/]+\.bash)?|completions/.+|test/(config/bashrc|fallback/update-fallback-links|runLint|update-test-cmd-list)|.+\.sh(\.in)?)$
         exclude: ^completions/(\.gitignore|Makefile.*)$
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.2
+    rev: v0.10.0.1
     hooks:
       - id: shellcheck
         args: [-f, gcc]
         types: [text]
-        files: ^(bash_completion|completions/.+|test/(config/bashrc|update-test-cmd-list)|.+\.sh(\.in)?)$
+        files: ^(bash_completion(\.d/[^/]+\.bash)?|completions/.+|test/(config/bashrc|fallback/update-fallback-links|runLint|update-test-cmd-list)|.+\.sh(\.in)?)$
         exclude: ^completions/(\.gitignore|Makefile.*)$
         require_serial: false  # We disable SC1090 anyway, so parallel is ok
 
@@ -35,44 +35,24 @@ repos:
         files: ^test/t/.+\.py$
         pass_filenames: false
 
-      - id: update-test-deprecated-links
-        name: update-test-deprecated-links
+      - id: update-test-fallback-links
+        name: update-test-fallback-links
         language: script
-        entry: test/deprecated/update-deprecated-links
+        entry: test/fallback/update-fallback-links
         files: ^completions/_
         pass_filenames: false
 
-  - repo: https://github.com/psf/black
-    rev: 22.10.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.5
     hooks:
-      - id: black
+      - id: ruff
         types: [text]
         files: ^(helpers/python|.+\.py)$
         exclude: ^completions/
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        args: [--config=test/setup.cfg]
-        additional_dependencies:
-          # Splitting dashes and items on separate lines is intentional,
-          # enables Renovate's pip_requirements manager to update this file.
-          -
-            pycodestyle ==2.10.0
-          -
-            pyflakes ==3.0.1
-          -
-            flake8-bugbear ==22.10.27
+      - id: ruff-format
         types: [text]
         files: ^(helpers/python|.+\.py)$
         exclude: ^completions/
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.9.3
-    hooks:
-      - id: isort
-        args: [--filter-files, --settings-path=test/setup.cfg]
 
   - repo: local
     hooks:
@@ -80,23 +60,15 @@ repos:
         name: mypy
         language: python
         additional_dependencies:
-          -
-            venv-run ==0.1.0
+          - venv-run==0.2.0
         entry: venv-run mypy
         args: [--config-file=test/setup.cfg]
         types: [python]
         # Intentionally not run on helpers/python (we support very old versions)
         exclude: ^completions/|^test/fixtures/pytest/
 
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.1.0
-    hooks:
-      - id: pyupgrade
-        args: [--py36-plus, --keep-percent-format]
-        exclude: ^completions/
-
   - repo: https://github.com/perltidy/perltidy
-    rev: "20210717"
+    rev: "20240202"
     hooks:
       - id: perltidy
         types: [text]
@@ -111,7 +83,7 @@ repos:
         files: ^(helpers/perl|.+\.p[ml])$
 
   - repo: https://github.com/jackdewinter/pymarkdown
-    rev: v0.9.6
+    rev: v0.9.18
     hooks:
       - id: pymarkdown
         entry: pymarkdown
@@ -121,12 +93,12 @@ repos:
         exclude: ^CHANGELOG\.md$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.5.0
     hooks:
       - id: check-case-conflict
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.12.10
+    rev: v1.20.3
     hooks:
       - id: typos
         exclude: ^(CHANGELOG\.md|test/(test-cmd-list\.txt|fixtures/.+))$

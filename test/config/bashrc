@@ -34,12 +34,10 @@ export BASH_COMPLETION_USER_FILE=/dev/null
 # overriding in-tree completions. Setting the user dir would otherwise suffice,
 # but simple xspec completions are only installed if a separate one is not
 # found in *any* completion dirs, and we want to use our "shadow" completion
-# dir with which we cause loading of our in-tree deprecated completions
+# dir with which we cause loading of our in-tree fallback completions
 # instead of possibly (system-)installed upstream ones.
-export BASH_COMPLETION_USER_DIR="$SRCDIRABS/deprecated"
-# /var/empty isn't necessarily actually always empty :P
-export BASH_COMPLETION_COMPAT_DIR=/var/empty/bash_completion.d
-export BASH_COMPLETION_COMPAT_IGNORE='*'
+export BASH_COMPLETION_USER_DIR="$SRCDIRABS/fallback"
+export BASH_COMPLETION_COMPAT_DIR="$SRCDIRABS/../bash_completion.d"
 export XDG_DATA_DIRS=/var/empty
 
 # Make sure default settings are in effect
@@ -48,6 +46,7 @@ unset -v \
     BASH_COMPLETION_CMD_CVS_REMOTE \
     BASH_COMPLETION_CMD_IWCONFIG_SCAN \
     BASH_COMPLETION_CMD_TAR_INTERNAL_PATHS \
+    BASH_COMPLETION_COMPAT_IGNORE \
     BASH_COMPLETION_FILEDIR_FALLBACK \
     BASH_COMPLETION_KNOWN_HOSTS_WITH_HOSTFILE \
     COMP_CONFIGURE_HINTS \
@@ -68,8 +67,10 @@ _comp__test_get_env()
     (
         # Do not output the state of test variables "_comp__test_+([0-9])_*"
         # and internal mutable variables "_comp_*_mut_*".
+        local IFS=$' \t\n'
         # shellcheck disable=SC2046
         unset -v $(compgen -W '"${!_comp_@}"' -X '!_comp_@(_test_+([0-9])_*|*_mut_*)')
+        _comp_unlocal IFS
 
         set -o posix
         set

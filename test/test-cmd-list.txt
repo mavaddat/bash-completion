@@ -21,6 +21,7 @@ autoscan
 autossh
 avahi-browse
 awk
+b2sum
 badblocks
 base64
 bash
@@ -127,6 +128,7 @@ grub
 gssdp-device-sniffer
 gssdp-discover
 gzip
+hash
 hcitool
 head
 hexdump
@@ -190,6 +192,7 @@ lvchange
 lvcreate
 lvdisplay
 lvextend
+lvm
 lvmdiskscan
 lvreduce
 lvremove
@@ -246,7 +249,6 @@ ntpdate
 objcopy
 od
 oggdec
-op
 openssl
 opera
 optipng
@@ -301,6 +303,7 @@ pyflakes
 pylint
 pylint-3
 pyston
+pytest
 python
 python3
 qemu
@@ -333,7 +336,10 @@ seq
 setquota
 sftp
 sha1sum
+sha224sum
 sha256sum
+sha384sum
+sha512sum
 shar
 shellcheck
 sitecopy
